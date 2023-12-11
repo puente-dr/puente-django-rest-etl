@@ -102,7 +102,7 @@ class Formspecificationsv2Bronze(models.Model):
         db_table = 'formspecificationsv2_bronze'
 
 class HistoryenvironmentalhealthBronze(models.Model):
-    objectid = models.TextField(db_column='objectId', blank=True, null=True)  # Field name made lowercase.
+    objectid = models.TextField(primary_key=True,db_column='objectId', blank=True, null=False)  # Field name made lowercase.
     biggestproblemofcommunity_v2 = models.TextField(blank=True, null=True)
     bathroomaccess_v2 = models.TextField(db_column='bathroomAccess_v2', blank=True, null=True)  # Field name made lowercase.
     clinicaccess_v2 = models.TextField(db_column='clinicAccess_v2', blank=True, null=True)  # Field name made lowercase.
