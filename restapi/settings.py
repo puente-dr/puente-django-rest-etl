@@ -33,6 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '172.31.5.240',
+    '172.31.10.140',
     'django-rest-etl-env.eba-pftvc3is.us-east-1.elasticbeanstalk.com'
 ]
 
