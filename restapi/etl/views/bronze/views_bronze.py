@@ -1,11 +1,23 @@
-from django.contrib.auth.models import Group, User
+from django.db.models import Count
+
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets,response
+from rest_framework import status, viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import action
+
 from restapi.etl.models.bronze import HistoryenvironmentalhealthBronze
 
 from restapi.etl.serializers.bronze import HistoryenvironmentalhealthBronzeSerializer
 
-
+"""
+list /environmentalhealthbronze/
+create /environmentalhealthbronze/new/
+detail /environmentalhealthbronze/1/
+update /environmentalhealthbronze/1/edit/
+delete /environmentalhealthbronze/1/delete/
+any methods not dependent on an object /environmentalhealthbronze/view-name/
+any methods dependent on a particular object /environmentalhealthbronze/1/view-name/
+"""
 
 class HistoryenvironmentalhealthBronzeViewSet(viewsets.ViewSet):
     """
@@ -15,12 +27,20 @@ class HistoryenvironmentalhealthBronzeViewSet(viewsets.ViewSet):
 
     def list(self, request):
         serializer = HistoryenvironmentalhealthBronzeSerializer(self.queryset, many=True)
-        return response.Response(serializer.data)
+        return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         environmental_health_record = get_object_or_404(self.queryset, pk=pk)
         serializer = HistoryenvironmentalhealthBronzeSerializer(environmental_health_record)
-        return response.Response(serializer.data)
+        return Response(serializer)
+    
+    @action(detail=False, methods=['post'])
+    def get_count(self, request, pk=None):
+        fields = request.data.get('fields', [])
+        field = fields[0]
+        queryset = HistoryenvironmentalhealthBronze.objects.values(field).annotate(count_of_unique_values=Count('*')).order_by("-count_of_unique_values")
+        return Response(queryset)
+
 
     def create(self, request):
         pass
@@ -33,19 +53,3 @@ class HistoryenvironmentalhealthBronzeViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         pass
-
-# class UserViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows users to be viewed or edited.
-#     """
-#     queryset = User.objects.all().order_by('-date_joined')
-#     serializer_class = UserSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-
-# class GroupViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows groups to be viewed or edited.
-#     """
-#     queryset = Group.objects.all()
-#     serializer_class = GroupSerializer
-#     permission_classes = [permissions.IsAuthenticated]
