@@ -31,10 +31,7 @@ SECRET_KEY = 'django-insecure-6$@i76f&kdw8365-29mx&%&mkhwdx2%psd0uhbc0=6$p!#)^l(
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    '172.31.5.240',
-    '172.31.10.140',
-    'django-rest-etl-env.eba-pftvc3is.us-east-1.elasticbeanstalk.com'
+    '*'
 ]
 
 
