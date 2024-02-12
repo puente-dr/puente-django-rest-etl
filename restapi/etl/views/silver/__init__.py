@@ -1,0 +1,1 @@
+from .views_silver import PatientDimensionViewSet

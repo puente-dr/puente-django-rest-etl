@@ -40,6 +40,28 @@ class HistoryenvironmentalhealthBronzeViewSet(viewsets.ViewSet):
         field = fields[0]
         queryset = HistoryenvironmentalhealthBronze.objects.values(field).annotate(count_of_unique_values=Count('*')).order_by("-count_of_unique_values")
         return Response(queryset)
+    
+    def list_filter_sort(self, request):
+        # Get parameters for sorting and filtering
+        sort_by = request.query_params.get('sort_by', None)
+        order = request.query_params.get('order', 'asc')  # default ascending order
+        filter_criteria = request.query_params.get('filter_criteria', None)
+
+        # Apply filtering if criteria is provided
+        queryset = self.queryset
+        if filter_criteria:
+            queryset = queryset.filter(**filter_criteria)
+
+        # Apply sorting if sort_by parameter is provided
+        if sort_by:
+            if order == 'asc':
+                queryset = queryset.order_by(sort_by)
+            elif order == 'desc':
+                queryset = queryset.order_by('-' + sort_by)
+
+        # Serialize the queryset and return response
+        serializer = HistoryenvironmentalhealthBronzeSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
     def create(self, request):
