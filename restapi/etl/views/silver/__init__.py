@@ -1,1 +1,1 @@
-from .views_silver import PatientDimensionViewSet
+from .views_silver import PatientDimensionViewSet, FactViewSet

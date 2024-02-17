@@ -23,3 +23,11 @@ python3 manage.py runserver
 ```
 
 <!-- https://www.django-rest-framework.org/tutorial/quickstart/ -->
+
+Deploy
+
+```
+eb deploy
+```
+
+<!-- TODO: Make auto-deploy to main (codepipeline) -->
