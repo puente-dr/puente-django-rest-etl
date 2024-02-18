@@ -6,6 +6,7 @@ class PatientDimSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PatientDim
         fields = [
+            "uuid",
             "first_name",
             "last_name",
             "nick_name",
@@ -17,6 +18,8 @@ class PatientDimSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 class MainFactSerializer(serializers.ModelSerializer):
+    patient = PatientDimSerializer(many=False, read_only=True)
+
     class Meta:
         model = SurveyFact
         fields = [

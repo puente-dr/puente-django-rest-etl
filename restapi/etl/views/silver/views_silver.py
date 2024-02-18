@@ -111,12 +111,11 @@ class FactViewSet(viewsets.ViewSet):
 
         parameters = request.data.get('parameters')
         
-        print(parameters)
-
         filter_criteria, sort_by, order = itemgetter('filter_criteria', 'sort_by', 'order')(parameters)
 
         # Apply filtering if criteria is provided
-        queryset = self.queryset
+        queryset = SurveyFact.objects.select_related('patient')
+    
         if filter_criteria:
             queryset = queryset.filter(**filter_criteria)
 

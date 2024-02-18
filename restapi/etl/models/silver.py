@@ -76,7 +76,7 @@ class SurveyFact(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     form = models.ForeignKey(FormDim, models.DO_NOTHING)
-    patient = models.ForeignKey(PatientDim, models.DO_NOTHING)
+    patient = models.ForeignKey(PatientDim, on_delete=models.DO_NOTHING)
     household_id = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
